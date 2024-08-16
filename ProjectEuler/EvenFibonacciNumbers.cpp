@@ -7,3 +7,15 @@ terms. By starting with 1 and 2, the first 10 terms will be:
 By considering the terms in the Fibonacci sequence whose values do not exceed
 four million, find the sum of the even-valued terms. 
 */
+
+int solution() {
+    int sol = 0;
+    std::unordered_map<int, int> fibs;
+    fibs[0] = 0;
+    fibs[1] = 1;
+    for(int i = 2; fibs[i-1] < 4000000; i++) {
+        fibs[i] = fibs[i-1] + fibs[i-2];
+        sol += (fibs[i] % 2 == 0) ? fibs[i] : 0;
+    }   
+    return sol;
+}
