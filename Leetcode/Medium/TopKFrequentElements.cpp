@@ -1,23 +1,17 @@
 class Solution {
 public:
     std::vector<int> topKFrequent(std::vector<int>& nums, int k) {
-        // Step 1: Calculate frequencies
         std::unordered_map<int, int> frequencies;
-        for (int num : nums) {
-            frequencies[num]++;
+        for(int n : nums) frequencies[n]++;
+        priority_queue<pair<int, int>> pq;
+        vector<int> topK;
+        for(auto i  = frequencies.begin(); i != frequencies.end(); i++) {
+            pq.push(make_pair(i->second, i->first));
+            if(pq.size() > (int) frequencies.size() - k) {
+                topK.push_back(pq.top().second);
+                pq.pop();
+            }
         }
-
-        std::vector<std::pair<int, int>> freqVec(frequencies.begin(), frequencies.end());
-
-        std::sort(freqVec.begin(), freqVec.end(), [](const std::pair<int, int>& a, const std::pair<int, int>& b) {
-            return a.second > b.second;
-        });
-
-        std::vector<int> result;
-        for (int i = 0; i < k; i++) {
-            result.push_back(freqVec[i].first);
-        }
-
-        return result;
+        return topK;
     }
 };
